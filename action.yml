@@ -1,0 +1,28 @@
+author: ynezz
+description: "OpenWrt CI native testing"
+name: "OpenWrt CI native testing for GitHub Actions"
+
+branding:
+  icon: wireless
+  color: orange
+
+runs:
+  using: 'composite'
+  steps:
+    - env:
+        CI_SOURCE_URL: 'https://gitlab.com/ynezz/openwrt-ci/raw/master'
+      run: |
+        chmod ugo=rwx $GITHUB_WORKSPACE
+        cd $GITHUB_WORKSPACE
+        wget -q $CI_SOURCE_URL/Makefile -O Makefile.ci
+        make ci-prepare -f Makefile.ci
+        docker run --rm --interactive \
+          --volume $GITHUB_WORKSPACE:/home/build/source \
+          --workdir /home/build/source \
+          --env CI_OPENWRT_ROOT=/home/build/openwrt \
+          --env CI_ENABLE_UNIT_TESTING \
+          --env CI_TARGET_BUILD_DEPENDS \
+          --env CI_CMAKE_EXTRA_BUILD_ARGS \
+          openwrtorg/sdk:${CI_TARGET_SDK_IMAGE}-${CI_TARGET_SDK_RELEASE} \
+          make ci-sdk-oot-build -f Makefile.ci
+      shell: bash
