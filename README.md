@@ -17,22 +17,22 @@ env:
 jobs:
   sdk_build:
     name: Build with OpenWrt ${{ matrix.sdk_platform }} SDK (out of tree)
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
       matrix:
         sdk_platform:
           - ath79-generic
-          - imx6-generic
+          - imx-cortexa9
           - malta-be
-          - mvebu-cortexa53
+          - mediatek-mt7622
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Out of tree build with OpenWrt ${{ matrix.sdk_platform }} SDK
-        uses: ynezz/gh-actions-openwrt-ci-sdk@v0.0.1
+        uses: ynezz/gh-actions-openwrt-ci-sdk@v0.0.2
         env:
           CI_TARGET_SDK_RELEASE: master
           CI_TARGET_SDK_IMAGE: ${{ matrix.sdk_platform }}
