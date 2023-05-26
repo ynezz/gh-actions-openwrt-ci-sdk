@@ -24,6 +24,6 @@ runs:
           --env CI_TARGET_BUILD_DEPENDS \
           --env CI_FEED_BUILD_DEPENDS \
           --env CI_CMAKE_EXTRA_BUILD_ARGS \
-          openwrtorg/sdk:${CI_TARGET_SDK_IMAGE}-${CI_TARGET_SDK_RELEASE} \
+          openwrt/sdk:${CI_TARGET_SDK_IMAGE}-${CI_TARGET_SDK_RELEASE} \
           make ci-sdk-oot-build -f Makefile.ci
       shell: bash
