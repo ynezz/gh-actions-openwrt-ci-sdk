@@ -19,7 +19,7 @@ runs:
         docker run --rm --interactive \
           --volume $GITHUB_WORKSPACE:/home/build/source \
           --workdir /home/build/source \
-          --env CI_OPENWRT_ROOT=/home/build/openwrt \
+          --env CI_OPENWRT_ROOT=/builder \
           --env CI_ENABLE_UNIT_TESTING \
           --env CI_TARGET_BUILD_DEPENDS \
           --env CI_FEED_BUILD_DEPENDS \
